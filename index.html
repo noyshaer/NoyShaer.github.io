@@ -211,6 +211,7 @@
             border-radius: 2px;
             transition: var(--transition);
             margin-top: 10px;
+            cursor: pointer;
         }
         
         .cv-link:hover {
@@ -314,6 +315,109 @@
             color: var(--accent-color);
         }
         
+        /* Modal Styles for PDF Viewer */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 900px;
+            height: 90%;
+            position: relative;
+            border-radius: 5px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .modal-close:hover {
+            transform: scale(1.1);
+        }
+        
+        .modal-body {
+            height: calc(100% - 56px);
+        }
+        
+        .pdf-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .pdf-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            gap: 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .pdf-btn {
+            padding: 8px 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .pdf-btn:hover {
+            background-color: #5e57c5;
+        }
+        
         /* Media Queries */
         @media (max-width: 1024px) {
             .projects-grid {
@@ -408,7 +512,7 @@
             <div class="nav-links">
                 <a href="#about" class="active">About</a>
                 <a href="#projects">Projects</a>
-                <a href="resume.pdf">CV</a>
+                <a href="#" id="cvNavLink">CV</a>
             </div>
             <div class="hamburger">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -441,7 +545,7 @@
                 
                 <p>My approach to architecture integrates functionality, aesthetics, and sustainability. With 5 years of professional experience, I've worked on residential, commercial, and public building projects.</p>
                 
-                <a href="resume.pdf" class="cv-link">Download CV</a>
+                <a href="#" id="cvAboutLink" class="cv-link">Download CV</a>
             </div>
         </div>
     </section>
@@ -535,6 +639,25 @@
         </div>
     </footer>
 
+    <!-- PDF Viewer Modal -->
+    <div id="pdfModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Noy Shaer - CV</div>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="pdf-container">
+                    <iframe id="pdfFrame" src=""></iframe>
+                </div>
+                <div class="pdf-controls">
+                    <button class="pdf-btn" id="downloadPdf">Download PDF</button>
+                    <button class="pdf-btn" id="printPdf">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Simple scroll effect for navigation
         window.addEventListener('scroll', function() {
@@ -546,9 +669,189 @@
             }
         });
         
-        // Mobile menu toggle (would need to be expanded for full functionality)
+        // PDF viewer functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('pdfModal');
+            const pdfFrame = document.getElementById('pdfFrame');
+            const cvNavLink = document.getElementById('cvNavLink');
+            const cvAboutLink = document.getElementById('cvAboutLink');
+            const closeModal = document.getElementById('closeModal');
+            const downloadPdf = document.getElementById('downloadPdf');
+            const printPdf = document.getElementById('printPdf');
+            
+            // Create Blob for PDF data (this is where you'd normally load your actual PDF)
+            // For demonstration purposes, we're creating a simple PDF using PDF.js
+            function createDummyPDF() {
+                return new Promise((resolve) => {
+                    // In a real scenario, you would fetch the actual PDF
+                    // This is a placeholder for demonstration
+                    const pdfData = {
+                        name: 'Noy Shaer',
+                        title: 'Architect',
+                        education: 'M.Arch, NYIT',
+                        experience: '5 years professional experience',
+                        skills: 'Sustainable design, Urban planning, 3D modeling'
+                    };
+                    
+                    // In a real implementation, this would be the path to your actual PDF
+                    const pdfPath = 'resume.pdf';
+                    resolve(pdfPath);
+                });
+            }
+            
+            // Function to open PDF modal
+            function openPdfViewer() {
+                createDummyPDF().then(pdfPath => {
+                    // Set the PDF source (in a real implementation)
+                    pdfFrame.src = pdfPath;
+                    
+                    // For this demo, we'll show a placeholder message
+                    // Remove this in your actual implementation
+                    if (!pdfFrame.src || pdfFrame.src === 'about:blank' || pdfFrame.src.endsWith('#')) {
+                        pdfFrame.srcdoc = `
+                            <html>
+                                <head>
+                                    <style>
+                                        body {
+                                            font-family: 'Work Sans', sans-serif;
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            height: 100vh;
+                                            margin: 0;
+                                            text-align: center;
+                                            padding: 20px;
+                                        }
+                                        .content {
+                                            max-width: 600px;
+                                        }
+                                        h1 {
+                                            font-family: 'Space Grotesk', sans-serif;
+                                            margin-bottom: 20px;
+                                            color: #786FF0;
+                                        }
+                                        .cv-section {
+                                            margin-bottom: 30px;
+                                            text-align: left;
+                                        }
+                                        h2 {
+                                            font-family: 'Space Grotesk', sans-serif;
+                                            border-bottom: 2px solid #786FF0;
+                                            padding-bottom: 5px;
+                                            margin-bottom: 15px;
+                                        }
+                                        .cv-item {
+                                            margin-bottom: 15px;
+                                        }
+                                        .cv-item h3 {
+                                            margin-bottom: 5px;
+                                        }
+                                        .cv-item p {
+                                            margin: 5px 0;
+                                        }
+                                    </style>
+                                </head>
+                                <body>
+                                    <div class="content">
+                                        <h1>Noy Shaer - Curriculum Vitae</h1>
+                                        
+                                        <div class="cv-section">
+                                            <h2>Education</h2>
+                                            <div class="cv-item">
+                                                <h3>Master of Architecture</h3>
+                                                <p>New York Institute of Technology (NYIT)</p>
+                                                <p>Specialization: Urban Design</p>
+                                                <p>2018-2020</p>
+                                            </div>
+                                            <div class="cv-item">
+                                                <h3>Bachelor of Science in Architectural Studies</h3>
+                                                <p>University of Example</p>
+                                                <p>2014-2018</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="cv-section">
+                                            <h2>Professional Experience</h2>
+                                            <div class="cv-item">
+                                                <h3>Senior Architect</h3>
+                                                <p>Architecture Innovations, New York</p>
+                                                <p>2022-Present</p>
+                                                <p>Leading sustainable design projects for commercial and residential clients.</p>
+                                            </div>
+                                            <div class="cv-item">
+                                                <h3>Project Architect</h3>
+                                                <p>Urban Design Associates</p>
+                                                <p>2020-2022</p>
+                                                <p>Managed public building projects with focus on community integration.</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="cv-section">
+                                            <h2>Skills</h2>
+                                            <p>Sustainable Design, Urban Planning, 3D Modeling (Revit, AutoCAD), Visualization, Project Management</p>
+                                        </div>
+                                    </div>
+                                </body>
+                            </html>
+                        `;
+                    }
+                    
+                    // Show the modal
+                    modal.classList.add('active');
+                    
+                    // Prevent body scrolling when modal is open
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            // Event listeners for opening the PDF
+            cvNavLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                openPdfViewer();
+            });
+            
+            cvAboutLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                openPdfViewer();
+            });
+            
+            // Close the modal
+            closeModal.addEventListener('click', function() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+            
+            // Click outside to close
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Download PDF functionality
+            downloadPdf.addEventListener('click', function() {
+                // In a real implementation, you would trigger a download of the actual PDF file
+                const link = document.createElement('a');
+                link.href = 'resume.pdf'; // This would be your actual PDF path
+                link.download = 'Noy_Shaer_CV.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+            
+            // Print PDF functionality
+            printPdf.addEventListener('click', function() {
+                // This will print the iframe content
+                pdfFrame.contentWindow.print();
+            });
+        });
+        
+        // Mobile menu toggle
         document.querySelector('.hamburger').addEventListener('click', function() {
             // Add mobile menu functionality here
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
         });
     </script>
 </body>
