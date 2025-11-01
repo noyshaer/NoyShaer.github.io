@@ -15,6 +15,7 @@ body {
   color: var(--text);
   background: var(--bg);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 /* Remove top header globally per request; keep footer styling minimal */
@@ -85,7 +86,7 @@ h1, h2, h3, h4 { font-weight: 600; }
 .dot { width: 8px; height: 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.9); background: rgba(255,255,255,0.6); cursor: pointer; padding: 0; }
 .dot.is-active { background: #fff; }
 
-.category-header { display: flex; align-items: baseline; justify-content: space-between; margin: 12px 0 18px; }
+.category-header { display: flex; align-items: baseline; justify-content: space-between; margin: 12px 0 18px; flex-wrap: wrap; gap: 8px; }
 .category-header .subtle { color: var(--muted); }
 
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
@@ -110,15 +111,28 @@ h1, h2, h3, h4 { font-weight: 600; }
 @media (max-width: 1100px) {
   .global-menu { position: static; display: flex; gap: 16px; margin-bottom: 12px; }
   .global-menu a { border-left: none; padding: 0; }
+  .global-rail { position: static; left: auto; top: auto; margin-bottom: 12px; }
+  .brand-global { margin-bottom: 12px; font-size: 24px; letter-spacing: 0.14em; word-spacing: 0.3em; }
 }
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
   .grid { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 32px; }
+  .brand-heading { font-size: 48px; }
 }
 
 @media (max-width: 640px) {
   .grid { grid-template-columns: 1fr; }
+  .brand-heading { font-size: 36px; }
+  .content { padding: 16px; }
 }
+
+/* Improve text wrapping to avoid overflow on narrow screens */
+p, h1, h2, h3, h4, h5, h6, a, li { overflow-wrap: anywhere; word-break: break-word; }
+
+/* Ensure embedded media and CV content scale within the viewport */
+.cv-html img, .cv-html iframe, .cv-html embed, .cv-html object { max-width: 100%; height: auto; }
+.cv-html table { width: 100%; display: block; overflow-x: auto; }
 
 
