@@ -90,39 +90,48 @@ h1, h2, h3, h4 { font-weight: 600; }
 .slide img { display: block; width: 100%; height: auto; max-height: 90vh; margin: 0 auto; object-fit: contain; background: var(--bg); }
 .slide { text-decoration: none; color: inherit; }
 .image-gallery .slide img { cursor: pointer; }
-.image-gallery .slides::before,
-.image-gallery .slides::after {
-  content: '';
+.slider-arrow {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 28%;
-  max-width: 220px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  z-index: 2;
+}
+.slider-arrow:hover,
+.slider-arrow:focus-visible {
+  color: var(--text);
+}
+.slider-arrow:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.slider-arrow--prev { left: 12px; }
+.slider-arrow--next { right: 12px; }
+.slider-arrow svg {
+  width: 20px;
+  height: 20px;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 140ms ease;
-  background-repeat: no-repeat;
-  background-size: 100% 100%, 20px 32px;
 }
-.image-gallery .slider:hover .slides::before,
-.image-gallery .slider:hover .slides::after,
-.image-gallery .slider:focus-within .slides::before,
-.image-gallery .slider:focus-within .slides::after {
-  opacity: 1;
+.slider-arrow svg path {
+  transition: stroke-width 0.2s ease;
 }
-.image-gallery .slides::before {
-  left: 0;
-  background-image:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 40'%3E%3Cpath fill='%23ffffff' fill-opacity='0.9' d='M15.9 1.8 4.5 20l11.4 18.2-2.8 1.8L0.7 20 13.1 0z'/%3E%3C/svg%3E");
-  background-position: left center, 28px center;
+.slider-arrow:hover svg path,
+.slider-arrow:focus-visible svg path {
+  stroke-width: 2;
 }
-.image-gallery .slides::after {
-  right: 0;
-  background-image:
-    linear-gradient(270deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 40'%3E%3Cpath fill='%23ffffff' fill-opacity='0.9' d='M8.1 1.8 19.5 20 8.1 38.2l2.8 1.8L23.3 20 10.9 0z'/%3E%3C/svg%3E");
-  background-position: right center, calc(100% - 28px) center;
+.slider-arrow[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 .dots { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); display: flex; gap: 8px; }
 .dot { width: 8px; height: 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.9); background: rgba(255,255,255,0.6); cursor: pointer; padding: 0; }
@@ -144,19 +153,48 @@ h1, h2, h3, h4 { font-weight: 600; }
 /* Make project thumbnails square on category pages (architecture/interior) only */
 .grid--category .card-image { padding-top: 100%; }
 
-.project-header h1 { margin-bottom: 4px; }
-.project .lead { color: var(--muted); }
+.project {
+  padding-top: 88px;
+}
+.project-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 440px) minmax(640px, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+.project-info { display: flex; flex-direction: column; gap: 24px; }
+.project-header h1 { margin-bottom: 4px; font-weight: 400; }
+.project-meta { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; }
+.project-meta-item { margin: 0; font-size: 16px; color: var(--text); font-weight: 300; }
+.project-meta-label { font-size: 13px; letter-spacing: 0.08em; color: var(--muted); margin-right: 10px; font-weight: 400; text-transform: none; }
+.project-separator { margin-top: 26px; width: 64px; height: 1px; background: var(--border); }
+.project-gallery {
+  position: relative;
+  margin-top: 0;
+}
+.project-description {
+  margin-top: 32px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 520px;
+}
+.project-description p { margin: 0; }
 .image-gallery { display: grid; grid-template-columns: 1fr; gap: 12px; }
 .image-gallery img { width: 100%; display: block; }
 .image-gallery .slider { margin: 0; max-width: 100%; }
 .image-gallery .single-image { border-radius: 10px; overflow: hidden; }
 .image-gallery .single-image img { width: 100%; height: auto; object-fit: contain; background: var(--bg); margin: 0 auto; }
 
+
 @media (max-width: 1100px) {
   .global-menu { position: static; display: flex; gap: 16px; margin-bottom: 12px; }
   .global-menu a { border-left: none; padding: 0; }
   .global-rail { position: static; left: auto; top: auto; margin-bottom: 12px; }
   .brand-global { margin-bottom: 12px; font-size: 24px; letter-spacing: 0.14em; word-spacing: 0.3em; }
+  .project-description {
+    margin-top: 16px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -165,12 +203,22 @@ h1, h2, h3, h4 { font-weight: 600; }
   .hero h1 { font-size: 32px; }
   .brand-heading { font-size: 48px; }
   .about-body { margin-top: 16px; }
+  .project { padding-top: 64px; }
+  .project-grid { grid-template-columns: 1fr; gap: 32px; }
 }
 
 @media (max-width: 640px) {
   .grid { grid-template-columns: 1fr; }
   .brand-heading { font-size: 36px; }
   .content { padding: 16px; }
+  .slider-arrow {
+    width: 36px;
+    height: 36px;
+  }
+  .slider-arrow--prev { left: 6px; }
+  .slider-arrow--next { right: 6px; }
+  .project { padding-top: 48px; }
+  .project-grid { gap: 24px; }
 }
 
 /* Improve text wrapping to avoid overflow on narrow screens */

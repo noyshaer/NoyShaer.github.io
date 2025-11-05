@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const interval = parseInt(slider.getAttribute('data-interval') || '3000', 10);
     const dots = Array.from(slider.querySelectorAll('.dot'));
+    const prevArrow = slider.querySelector('.slider-arrow--prev');
+    const nextArrow = slider.querySelector('.slider-arrow--next');
     let index = slides.findIndex((s) => s.classList.contains('is-active'));
     if (index < 0) index = 0;
     let timerId;
@@ -43,6 +45,22 @@ document.addEventListener('DOMContentLoaded', () => {
         start();
       });
     });
+
+    if (prevArrow) {
+      prevArrow.addEventListener('click', (event) => {
+        event.preventDefault();
+        goTo(index - 1);
+        start();
+      });
+    }
+
+    if (nextArrow) {
+      nextArrow.addEventListener('click', (event) => {
+        event.preventDefault();
+        goTo(index + 1);
+        start();
+      });
+    }
 
     slider.addEventListener('mouseenter', stop);
     slider.addEventListener('mouseleave', start);
