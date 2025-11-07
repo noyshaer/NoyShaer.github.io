@@ -158,7 +158,7 @@ h1, h2, h3, h4 { font-weight: 600; }
 .grid--category .card-image { padding-top: 100%; }
 
 .project {
-  padding-top: 88px;
+  padding-top: 86px;
 }
 .project-grid {
   display: grid;
@@ -191,7 +191,7 @@ h1, h2, h3, h4 { font-weight: 600; }
   gap: 24px;
 }
 .project-gallery-item {
-  margin: 0;
+  margin: 30px;
   border-radius: 12px;
   overflow: hidden;
 }
@@ -220,7 +220,7 @@ h1, h2, h3, h4 { font-weight: 600; }
   .hero h1 { font-size: 32px; }
   .brand-heading { font-size: 48px; }
   .about-body { margin-top: 16px; }
-  .project { padding-top: 64px; }
+  .project { padding-top: 62px; }
   .project-grid { grid-template-columns: 1fr; gap: 32px; }
 }
 
@@ -234,7 +234,7 @@ h1, h2, h3, h4 { font-weight: 600; }
   }
   .slider-arrow--prev { left: 6px; }
   .slider-arrow--next { right: 6px; }
-  .project { padding-top: 48px; }
+  .project { padding-top: 46px; }
   .project-grid { gap: 24px; }
 }
 
