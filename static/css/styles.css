@@ -84,11 +84,13 @@ h1, h2, h3, h4 { font-weight: 600; }
 
 /* Slider */
 .slider { position: relative; width: 100%; border-radius: 12px; overflow: hidden; background: var(--bg); }
-.slides { position: relative; width: 100%; }
-.slide { display: none; }
-.slide.is-active { display: block; }
+.slides { position: relative; width: 100%; height: auto; min-height: 300px; transition: height 400ms ease; }
+.slide { position: absolute; left: 0; right: 0; top: 0; display: block; opacity: 0; transform: translateY(-100%); transition: transform 600ms ease, opacity 1000ms ease; pointer-events: none; text-decoration: none; color: inherit; }
+.slide.is-active { opacity: 1; transform: translateY(0); z-index: 2; pointer-events: auto; }
+.slide.is-exiting { opacity: 0; transform: translateY(100%); z-index: 1; }
+.slide.from-top { transform: translateY(-100%); }
+.slide.is-entering { opacity: 1; transform: translateY(0); z-index: 2; }
 .slide img { display: block; width: 100%; height: auto; max-height: 90vh; margin: 0 auto; object-fit: contain; background: var(--bg); }
-.slide { text-decoration: none; color: inherit; }
 .image-gallery .slide img { cursor: pointer; }
 .slider-arrow {
   position: absolute;
