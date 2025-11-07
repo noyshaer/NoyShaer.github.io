@@ -67,6 +67,11 @@ h1, h2, h3, h4 { font-weight: 600; }
 .cv-html .cv-degree--undergrad { margin-top: 10px; }
 .cv-html .cv-degree-line { font-size: 18px; }
 
+/* Ensure left rail is visible on mid-desktop widths (e.g., 1440×900) */
+@media (max-width: 1500px) {
+  .global-rail { left: -150px; }
+}
+
 @media (max-width: 900px) {
   .about-grid { grid-template-columns: 1fr; }
 }
@@ -248,4 +253,70 @@ p, h1, h2, h3, h4, h5, h6, a, li { overflow-wrap: anywhere; word-break: break-wo
 .cv-html img, .cv-html iframe, .cv-html embed, .cv-html object { max-width: 100%; height: auto; }
 .cv-html table { width: 100%; display: block; overflow-x: auto; }
 
+
+
+/* Lightbox / Spotlight */
+.project-gallery-item img { cursor: zoom-in; }
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.lightbox.is-open { display: flex; }
+.lightbox__img {
+  max-width: 92vw;
+  max-height: 92vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  background: #0b0b0b;
+}
+.lightbox__button {
+  position: absolute;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease, opacity 120ms ease;
+}
+.lightbox__button:hover,
+.lightbox__button:focus-visible { background: rgba(255,255,255,0.12); outline: 2px solid rgba(255,255,255,0.3); outline-offset: 2px; }
+.lightbox__close { top: 18px; right: 18px; }
+.lightbox__arrow { top: 50%; transform: translateY(-50%); }
+.lightbox__arrow--prev { left: 18px; }
+.lightbox__arrow--next { right: 18px; }
+.lightbox__icon { width: 20px; height: 20px; pointer-events: none; }
+.lightbox__counter {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.85);
+  font-size: 14px;
+  background: rgba(0,0,0,0.3);
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+@media (max-width: 640px) {
+  .lightbox__button { width: 38px; height: 38px; }
+  .lightbox__icon { width: 18px; height: 18px; }
+  .lightbox__arrow--prev { left: 10px; }
+  .lightbox__arrow--next { right: 10px; }
+  .lightbox__close { top: 10px; right: 10px; }
+}
 
