@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Sync the first project image height to the text column height
+  const syncFirstImageHeight = () => {
+    const project = document.querySelector('.project');
+    if (!project) return;
+    const info = project.querySelector('.project-info');
+    const firstFigure = project.querySelector('.project-gallery-item--first');
+    const img = firstFigure && firstFigure.querySelector('img');
+    if (!info || !firstFigure || !img) return;
+    // Reset on small screens
+    if (window.innerWidth <= 900) {
+      firstFigure.style.height = '';
+      img.style.height = '';
+      return;
+    }
+    const infoRect = info.getBoundingClientRect();
+    const infoHeight = Math.round(infoRect.height);
+    if (infoHeight > 0) {
+      firstFigure.style.height = `${infoHeight}px`;
+      img.style.height = '100%';
+    }
+  };
+  // Recompute on load, resize, and after fonts load
+  window.addEventListener('load', syncFirstImageHeight);
+  window.addEventListener('resize', syncFirstImageHeight);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(syncFirstImageHeight).catch(() => {});
+  }
+  // Run once on DOM ready
+  requestAnimationFrame(syncFirstImageHeight);
+
   const sliders = Array.from(document.querySelectorAll('.slider'));
   if (!sliders.length) return;
 

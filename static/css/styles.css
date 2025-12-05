@@ -151,12 +151,14 @@ h1, h2, h3, h4 { font-weight: 600; }
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .grid--category {
   margin-top: 108px;
-  gap: 120px;
+  column-gap: 120px;
+  row-gap: 60px;
   padding-left: 108px;
 }
 .card { position: relative; display: block; border-radius: 12px; overflow: hidden; text-decoration: none; border: 1px solid var(--border); }
 .card-image { width: 100%; padding-top: 70%; background-size: cover; background-position: center; filter: saturate(95%); transition: transform 200ms ease, filter 200ms ease; }
-.card-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 14px; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%); color: #fff; opacity: 0; transition: opacity 200ms ease; }
+.card-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; padding: 8px 12px; background: linear-gradient(180deg, rgba(31,41,55,0.50) 0%, rgba(17,24,39,0.75) 100%); color: #fff; opacity: 0; transition: opacity 200ms ease; }
+.card-overlay h3 { margin-top: 0; }
 .card:hover .card-image { transform: scale(1.03); filter: saturate(110%); }
 .card:hover .card-overlay { opacity: 1; }
 .card .meta { opacity: 0.9; font-size: 14px; }
@@ -174,18 +176,24 @@ h1, h2, h3, h4 { font-weight: 600; }
   gap: 48px;
   align-items: start;
 }
+.project--architecture .project-grid {
+  grid-template-columns: minmax(460px, 640px) minmax(400px, 1fr);
+}
+/* Allow wider copy on architecture pages to use the wider column */
+.project--architecture .project-description { max-width: 640px; }
 .project-info { display: flex; flex-direction: column; gap: 24px; }
+.project-info { display: flex; flex-direction: column; gap: 24px; padding-left: 24px; }
 .project-header h1 { margin-bottom: 4px; font-weight: 400; }
-.project-meta { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; }
+.project-meta { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
 .project-meta-item { margin: 0; font-size: 16px; color: var(--text); font-weight: 300; }
 .project-meta-label { font-size: 13px; letter-spacing: 0.08em; color: var(--muted); margin-right: 10px; font-weight: 400; text-transform: none; }
-.project-separator { margin-top: 26px; width: 64px; height: 1px; background: var(--border); }
+.project-separator { margin-top: 6px; width: 64px; height: 1px; background: var(--border); }
 .project-gallery {
   position: relative;
   margin-top: 0;
 }
 .project-description {
-  margin-top: 32px;
+  margin-top: 2px;
   color: var(--muted);
   font-size: 16px;
   line-height: 1.7;
@@ -198,11 +206,10 @@ h1, h2, h3, h4 { font-weight: 600; }
   flex-direction: column;
   gap: 24px;
 }
-.project-gallery-item {
-  margin: 30px;
-  border-radius: 12px;
-  overflow: hidden;
-}
+.project-gallery-item { border-radius: 12px; overflow: hidden; }
+.project-gallery-item--first { grid-column: 2; align-self: stretch; margin: 0; }
+.project-gallery-item--first img { height: 100%; object-fit: cover; }
+.project-gallery-item--stacked { grid-column: 1 / -1; max-width: 960px; width: 100%; margin: 24px auto; }
 .project-gallery-item img {
   display: block;
   width: 100%;
@@ -230,6 +237,10 @@ h1, h2, h3, h4 { font-weight: 600; }
   .about-body { margin-top: 16px; }
   .project { padding-top: 62px; }
   .project-grid { grid-template-columns: 1fr; gap: 32px; }
+  .project-info { padding-left: 12px; }
+  .project-gallery-item--first { grid-column: 1; }
+  .project-gallery-item--first img { height: auto; object-fit: contain; }
+  .project-gallery-item--stacked { max-width: 100%; }
 }
 
 @media (max-width: 640px) {

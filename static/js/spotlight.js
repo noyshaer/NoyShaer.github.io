@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const galleries = Array.from(document.querySelectorAll('.project-gallery'));
-  if (!galleries.length) return;
+  // Support both legacy wrapper (.project-gallery) and the new layout where
+  // figures are direct items (.project-gallery-item inside .project)
+  const galleryRoots = Array.from(document.querySelectorAll('.project-gallery, .project'));
+  if (!galleryRoots.length) return;
 
   let lightboxEl;
   let imgEl;
@@ -132,9 +134,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.removeEventListener('keydown', onKeyDown);
   };
 
-  // Bind click handlers for every gallery's images
-  galleries.forEach((gallery) => {
-    const imgs = Array.from(gallery.querySelectorAll('img'));
+  // Bind click handlers for every gallery root
+  galleryRoots.forEach((root) => {
+    // If it's the legacy wrapper, select all imgs.
+    // Otherwise, select only gallery item images in the project.
+    const imgs = root.matches('.project-gallery')
+      ? Array.from(root.querySelectorAll('img'))
+      : Array.from(root.querySelectorAll('.project-gallery-item img'));
+    if (!imgs.length) return;
     imgs.forEach((imageEl, i) => {
       imageEl.addEventListener('click', (e) => {
         e.preventDefault();
