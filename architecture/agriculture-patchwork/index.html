@@ -13,10 +13,16 @@
     <main class="content">
       
         <aside class="global-rail">
-          
-            <a class="brand-global" href="/">Noy Shaer</a>
-          
-          <nav class="vertical-menu global-menu" aria-label="Primary">
+          <div class="global-rail__header">
+            
+              <a class="brand-global" href="/">Noy Shaer</a>
+            
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="global-menu">
+              <span class="menu-toggle__icon" aria-hidden="true"></span>
+              <span class="menu-toggle__label">Menu</span>
+            </button>
+          </div>
+          <nav class="vertical-menu global-menu" id="global-menu" aria-label="Primary">
             <a href="/architecture">Architecture</a>
             <a href="/interior">Interior Design</a>
             <a href="/about">About Me</a>
