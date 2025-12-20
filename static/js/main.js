@@ -1,4 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const globalMenu = document.querySelector('.global-menu');
+  const menuToggle = document.querySelector('.menu-toggle');
+
+  if (globalMenu && menuToggle) {
+    const closeMenu = () => {
+      globalMenu.classList.remove('is-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = globalMenu.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    globalMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        closeMenu();
+      }
+    });
+  }
+
   // Sync the first project image height to the text column height
   const syncFirstImageHeight = () => {
     const project = document.querySelector('.project');
