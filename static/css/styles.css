@@ -197,46 +197,17 @@ h1, h2, h3, h4 { font-weight: 600; }
 .project {
   padding-top: 86px;
 }
-.project-grid {
-  display: grid;
-  grid-template-columns: minmax(300px, 440px) minmax(640px, 1fr);
-  gap: 48px;
-  align-items: start;
-}
-.project--architecture .project-grid {
-  grid-template-columns: minmax(460px, 640px) minmax(400px, 1fr);
-}
-/* Allow wider copy on architecture pages to use the wider column */
-.project--architecture .project-description { max-width: 640px; }
-.project-info { display: flex; flex-direction: column; gap: 24px; }
-.project-info { display: flex; flex-direction: column; gap: 24px; padding-left: 24px; }
-.project-header h1 { margin-bottom: 4px; font-weight: 400; }
-.project-meta { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
-.project-meta-item { margin: 0; font-size: 16px; color: var(--text); font-weight: 300; }
-.project-meta-label { font-size: 13px; letter-spacing: 0.08em; color: var(--muted); margin-right: 10px; font-weight: 400; text-transform: none; }
-.project-separator { margin-top: 6px; width: 64px; height: 1px; background: var(--border); }
-.project-gallery {
-  position: relative;
-  margin-top: 0;
-}
-.project-description {
-  margin-top: 2px;
-  color: var(--muted);
-  font-size: 16px;
-  line-height: 1.7;
-  max-width: 520px;
-}
-.project-description p { margin: 0; }
 .image-gallery { display: block; }
 .project-gallery-stack {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 8px;
 }
-.project-gallery-item { border-radius: 12px; overflow: hidden; }
-.project-gallery-item--first { grid-column: 2; align-self: stretch; margin: 0; }
-.project-gallery-item--first img { height: 100%; object-fit: cover; }
-.project-gallery-item--stacked { grid-column: 1 / -1; max-width: 960px; width: 100%; margin: 24px auto; }
+.project-gallery-item { border-radius: 12px; overflow: hidden; width: 100%; }
 .project-gallery-item img {
   display: block;
   width: 100%;
@@ -250,9 +221,6 @@ h1, h2, h3, h4 { font-weight: 600; }
   .global-menu a { border-left: none; padding: 0; }
   .global-rail { position: static; left: auto; top: auto; margin-bottom: 12px; }
   .brand-global { margin-bottom: 12px; font-size: 24px; letter-spacing: 0.14em; word-spacing: 0.3em; }
-  .project-description {
-    margin-top: 16px;
-  }
 }
 
 @media (max-width: 900px) {
@@ -283,11 +251,7 @@ h1, h2, h3, h4 { font-weight: 600; }
   .brand-heading { font-size: 48px; }
   .about-body { margin-top: 16px; }
   .project { padding-top: 62px; }
-  .project-grid { grid-template-columns: 1fr; gap: 32px; }
-  .project-info { padding-left: 12px; }
-  .project-gallery-item--first { grid-column: 1; }
-  .project-gallery-item--first img { height: auto; object-fit: contain; }
-  .project-gallery-item--stacked { max-width: 100%; }
+  .project-gallery-stack { gap: 20px; padding: 0 4px; }
 }
 
 @media (max-width: 640px) {
@@ -302,7 +266,7 @@ h1, h2, h3, h4 { font-weight: 600; }
   .slider-arrow--prev { left: 6px; }
   .slider-arrow--next { right: 6px; }
   .project { padding-top: 46px; }
-  .project-grid { gap: 24px; }
+  .project-gallery-stack { gap: 16px; }
 }
 
 /* Improve text wrapping to avoid overflow on narrow screens */
