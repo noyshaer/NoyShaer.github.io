@@ -24,6 +24,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Floating "Back to top" button (desktop/laptop only)
+  const backToTop = document.querySelector('.back-to-top');
+  if (backToTop) {
+    const updateBackToTop = () => {
+      // Hide on small screens
+      if (window.innerWidth <= 900) {
+        backToTop.classList.remove('is-visible');
+        return;
+      }
+      backToTop.classList.toggle('is-visible', window.scrollY > 400);
+    };
+
+    backToTop.addEventListener('click', (event) => {
+      event.preventDefault();
+      const prefersReducedMotion =
+        window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    });
+
+    window.addEventListener('scroll', updateBackToTop, { passive: true });
+    window.addEventListener('resize', updateBackToTop);
+    updateBackToTop();
+  }
+
   // Sync the first project image height to the text column height
   const syncFirstImageHeight = () => {
     const project = document.querySelector('.project');
