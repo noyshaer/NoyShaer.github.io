@@ -6,79 +6,65 @@
     <title>Noy Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/styles.css" />
   </head>
   <body>
-    <main class="content">
-      
-        <aside class="global-rail">
-          <div class="global-rail__header">
-            
-              <a class="brand-global" href="/">Noy Shaer</a>
-            
-            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="global-menu">
-              <span class="menu-toggle__icon" aria-hidden="true"></span>
-              <span class="menu-toggle__label">Menu</span>
-            </button>
-          </div>
-          <nav class="vertical-menu global-menu" id="global-menu" aria-label="Primary">
-            <a href="/architecture">Architecture</a>
-            <a href="/about">About Me</a>
-            <a href="/contact">Contact</a>
-          </nav>
-        </aside>
-      
-      
-  <section class="hero">
-    <div class="hero-text"></div>
-    <div class="hero-image">
-      
-        <div class="slider" data-interval="2000">
-          <div class="slides">
-            
-              <a class="slide is-active" href="/architecture/kishon-river-flow" aria-label="Kishon River Flow">
-                <img src="/static/img/projects/architecture/kishon-river-flow/title.jpg" alt="Kishon River Flow" loading="lazy" />
-              </a>
-            
-              <a class="slide" href="/architecture/ecocycle-skyscrapper" aria-label="EcoCycle SkyScrapper">
-                <img src="/static/img/projects/architecture/ecocycle-skyscrapper/title.jpg" alt="EcoCycle SkyScrapper" loading="lazy" />
-              </a>
-            
-              <a class="slide" href="/architecture/greenhouse-pavilion" aria-label="Greenhouse Pavilion">
-                <img src="/static/img/projects/architecture/greenhouse-pavilion/title.jpg" alt="Greenhouse Pavilion" loading="lazy" />
-              </a>
-            
-              <a class="slide" href="/architecture/agriculture-patchwork" aria-label="The Fabric of Fields">
-                <img src="/static/img/projects/architecture/agriculture-patchwork/title.jpg" alt="The Fabric of Fields" loading="lazy" />
-              </a>
-            
-              <a class="slide" href="/architecture/eco-urbanism" aria-label="Eco Urbanism">
-                <img src="/static/img/projects/architecture/eco-urbanism/title.jpg" alt="Eco Urbanism" loading="lazy" />
-              </a>
-            
-              <a class="slide" href="/architecture/the-yellow-school" aria-label="The Yellow School">
-                <img src="/static/img/projects/architecture/the-yellow-school/title.jpg" alt="The Yellow School" loading="lazy" />
-              </a>
-            
-          </div>
-          <div class="dots" role="tablist">
-            
-              <button class="dot is-active" data-index="0" aria-label="Go to slide 1" role="tab"></button>
-            
-              <button class="dot" data-index="1" aria-label="Go to slide 2" role="tab"></button>
-            
-              <button class="dot" data-index="2" aria-label="Go to slide 3" role="tab"></button>
-            
-              <button class="dot" data-index="3" aria-label="Go to slide 4" role="tab"></button>
-            
-              <button class="dot" data-index="4" aria-label="Go to slide 5" role="tab"></button>
-            
-              <button class="dot" data-index="5" aria-label="Go to slide 6" role="tab"></button>
-            
-          </div>
+    <main class="content content--home">
+
+  <section class="home">
+    <div class="home-main">
+      <header class="home-header">
+        <a class="home-brand" href="/">Noy Shaer</a>
+        <p class="home-role">Architect · Tel Aviv</p>
+      </header>
+
+      <nav class="home-menu" aria-label="Primary">
+        <a class="home-menu__item" href="/architecture" data-visual="architecture" style="--i: 0">
+          <span class="home-menu__num">01</span>
+          <span class="home-menu__label">Architecture</span>
+          <span class="home-menu__note">Selected projects, 2022 – 2024</span>
+          <svg class="home-menu__arrow" viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h43M36 4l9 8-9 8"/></svg>
+        </a>
+        <a class="home-menu__item" href="/about" data-visual="about" style="--i: 1">
+          <span class="home-menu__num">02</span>
+          <span class="home-menu__label">About Me</span>
+          <span class="home-menu__note">Experience, education &amp; CV</span>
+          <svg class="home-menu__arrow" viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h43M36 4l9 8-9 8"/></svg>
+        </a>
+        <a class="home-menu__item" href="/contact" data-visual="contact" style="--i: 2">
+          <span class="home-menu__num">03</span>
+          <span class="home-menu__label">Contact</span>
+          <span class="home-menu__note">Email, phone &amp; LinkedIn</span>
+          <svg class="home-menu__arrow" viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h43M36 4l9 8-9 8"/></svg>
+        </a>
+      </nav>
+
+      <div class="home-foot">
+        <p class="home-intro">
+          Architect with a master’s degree in architecture and urban planning from the Technion,
+          working across architectural design, competitions and advanced digital technologies.
+        </p>
+        <div class="home-links">
+          <a href="mailto:noyshaer01@gmail.com">noyshaer01@gmail.com</a>
+          <a href="https://www.linkedin.com/in/noy-shaer-3ba31923b/" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-      
+      </div>
+    </div>
+
+    <div class="home-visual" aria-hidden="true">
+      <a class="home-visual__item is-active" href="/architecture" data-visual="architecture" tabindex="-1">
+        <img src="/static/img/home/architecture.jpg" alt="" />
+        <span class="home-visual__caption">Eco Urbanism · Ramat Gan, 2022</span>
+      </a>
+      <a class="home-visual__item" href="/about" data-visual="about" tabindex="-1">
+        <img src="/static/img/home/about.jpg" alt="" />
+        <span class="home-visual__caption">Noy Shaer</span>
+      </a>
+      <a class="home-visual__item" href="/contact" data-visual="contact" tabindex="-1">
+        <img src="/static/img/home/contact.jpg" alt="" />
+        <span class="home-visual__caption">Greenhouse Pavilion · Technion, 2023</span>
+      </a>
     </div>
   </section>
 

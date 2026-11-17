@@ -78,6 +78,31 @@ document.addEventListener('DOMContentLoaded', () => {
   // Run once on DOM ready
   requestAnimationFrame(syncFirstImageHeight);
 
+  // Home page: the large section menu swaps the image panel on hover/focus
+  const homeMenu = document.querySelector('.home-menu');
+  if (homeMenu) {
+    const items = Array.from(homeMenu.querySelectorAll('.home-menu__item'));
+    const visuals = Array.from(document.querySelectorAll('.home-visual__item'));
+    const activate = (item) => {
+      items.forEach((el) => el.classList.toggle('is-active', el === item));
+      homeMenu.classList.add('has-active');
+      const key = item.getAttribute('data-visual');
+      visuals.forEach((el) => {
+        el.classList.toggle('is-active', el.getAttribute('data-visual') === key);
+      });
+    };
+    const clear = () => {
+      items.forEach((el) => el.classList.remove('is-active'));
+      homeMenu.classList.remove('has-active');
+    };
+    items.forEach((item) => {
+      item.addEventListener('mouseenter', () => activate(item));
+      item.addEventListener('focus', () => activate(item));
+      item.addEventListener('blur', clear);
+    });
+    homeMenu.addEventListener('mouseleave', clear);
+  }
+
   const sliders = Array.from(document.querySelectorAll('.slider'));
   if (!sliders.length) return;
 
