@@ -82,18 +82,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const homeMenu = document.querySelector('.home-menu');
   if (homeMenu) {
     const items = Array.from(homeMenu.querySelectorAll('.home-menu__item'));
+    const visualPanel = document.querySelector('.home-visual');
     const visuals = Array.from(document.querySelectorAll('.home-visual__item'));
+    const defaultKey = visuals.length ? visuals[0].getAttribute('data-visual') : null;
+    // Show the image for a menu item; items without an image leave the panel blank
+    const showVisual = (key) => {
+      let matched = false;
+      visuals.forEach((el) => {
+        const isMatch = el.getAttribute('data-visual') === key;
+        el.classList.toggle('is-active', isMatch);
+        if (isMatch) matched = true;
+      });
+      if (visualPanel) visualPanel.classList.toggle('is-blank', !matched);
+    };
     const activate = (item) => {
       items.forEach((el) => el.classList.toggle('is-active', el === item));
       homeMenu.classList.add('has-active');
-      const key = item.getAttribute('data-visual');
-      visuals.forEach((el) => {
-        el.classList.toggle('is-active', el.getAttribute('data-visual') === key);
-      });
+      showVisual(item.getAttribute('data-visual'));
     };
     const clear = () => {
       items.forEach((el) => el.classList.remove('is-active'));
       homeMenu.classList.remove('has-active');
+      showVisual(defaultKey);
     };
     items.forEach((item) => {
       item.addEventListener('mouseenter', () => activate(item));

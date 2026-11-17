@@ -30,12 +30,18 @@ body {
 .content { max-width: 1100px; margin: 0 auto; padding: 24px; position: relative; }
 .global-rail { position: absolute; left: -180px; top: 24px; }
 .global-rail__header { display: flex; align-items: center; gap: 12px; }
-.brand-global { display: block; text-decoration: none; color: var(--text); font-size: 28px; font-weight: 400; margin-bottom: 66px; line-height: 1.1; font-family: 'Raleway', 'Segoe UI', Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.18em; word-spacing: 0.5em; }
+.brand-global { display: block; text-decoration: none; color: var(--text); font-size: 28px; font-weight: 400; margin-bottom: 38px; line-height: 1.1; font-family: 'Raleway', 'Segoe UI', Roboto, Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.18em; word-spacing: 0.5em; }
 .brand-global .brand-role { display: block; font-weight: 400; font-size: 0.95em; color: var(--muted); }
 .brand-global:hover { color: var(--accent); }
+.brand-tagline { display: block; margin-top: 12px; font-size: 13px; font-weight: 400; line-height: 16px; letter-spacing: 0.22em; word-spacing: normal; color: var(--muted); white-space: nowrap; }
 .global-menu { position: relative; }
-.global-menu a { text-decoration: none; color: var(--text); display: block; padding: 10px 0; font-size: 18px; border-left: 2px solid transparent; }
-.global-menu a:hover { color: var(--accent); border-left-color: var(--accent); padding-left: 6px; }
+.global-menu a { text-decoration: none; color: var(--text); display: flex; align-items: baseline; gap: 12px; padding: 10px 0; font-size: 18px; overflow-wrap: normal; word-break: normal; }
+.global-menu__num { font-size: 12px; font-weight: 400; letter-spacing: 0.16em; color: var(--muted); transition: color 300ms ease; }
+.global-menu__label { transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+.global-menu a:hover .global-menu__num,
+.global-menu a:focus-visible .global-menu__num { color: var(--accent); }
+.global-menu a:hover .global-menu__label,
+.global-menu a:focus-visible .global-menu__label { transform: translateX(6px); }
 .menu-toggle {
   display: none;
   align-items: center;
@@ -265,6 +271,9 @@ h1, h2, h3, h4 { font-weight: 600; }
     z-index: 20;
   }
   .global-rail__header { justify-content: space-between; }
+  .brand-tagline { margin-top: 6px; font-size: 11px; line-height: 14px; }
+  .global-menu a:hover .global-menu__label,
+  .global-menu a:focus-visible .global-menu__label { transform: none; }
   .menu-toggle { display: inline-flex; }
   .global-menu { display: none; flex-direction: column; gap: 0; margin: 0; padding: 8px 0 0; }
   .global-menu.is-open { display: flex; }
@@ -495,7 +504,9 @@ p, h1, h2, h3, h4, h5, h6, a, li { overflow-wrap: anywhere; word-break: break-wo
   overflow: hidden;
   background: #f1f5f9;
   min-height: 420px;
+  transition: opacity 500ms ease;
 }
+.home-visual.is-blank { opacity: 0; pointer-events: none; }
 .home-visual__item {
   position: absolute;
   inset: 0;
@@ -564,6 +575,7 @@ p, h1, h2, h3, h4, h5, h6, a, li { overflow-wrap: anywhere; word-break: break-wo
 @media (prefers-reduced-motion: reduce) {
   .home-menu__item { animation: none; }
   .home-menu__label, .home-menu__note, .home-menu__arrow,
-  .home-visual__item, .home-visual__item img { transition: none; }
+  .home-visual, .home-visual__item, .home-visual__item img,
+  .global-menu__label { transition: none; }
   .home-visual__item img { transform: none; }
 }
