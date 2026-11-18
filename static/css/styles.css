@@ -94,6 +94,7 @@ h1, h2, h3, h4 { font-weight: 600; }
 .cv-html h4 { margin: 8px 0 6px; font-size: 16px; color: var(--text); font-weight: 300; }
 .cv-html .cv-meta { color: var(--muted); font-size: 14px; }
 .cv-html .cv-entry { margin: 8px 0; }
+.cv-html .cv-entry + .cv-entry { margin-top: 20px; }
 .cv-html .cv-entry-header { font-weight: 300; font-size: 18px; }
 .cv-html .cv-entry-dates { color: var(--muted); font-size: 14px; }
 .cv-html .cv-list { padding-left: 18px; }
