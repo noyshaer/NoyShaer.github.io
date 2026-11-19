@@ -95,15 +95,74 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       if (visualPanel) visualPanel.classList.toggle('is-blank', !matched);
     };
+
+    // Architecture gallery: while "Architecture" is hovered the panel steps
+    // through the project images, one every 2 seconds, and pauses on leave.
+    const GALLERY_INTERVAL = 2000;
+    const gallery = document.querySelector('.home-visual__item[data-gallery]');
+    const galleryKey = gallery ? gallery.getAttribute('data-visual') : null;
+    const slides = gallery ? Array.from(gallery.querySelectorAll('img')) : [];
+    const caption = gallery ? gallery.querySelector('.home-visual__caption') : null;
+    let slideIndex = 0;
+    let galleryTimer = null;
+    let leavingTimer = null;
+    const isLoaded = (img) => img.complete && img.naturalWidth > 0;
+    const showSlide = (index) => {
+      if (index === slideIndex) return;
+      const previous = slides[slideIndex];
+      const next = slides[index];
+      slides.forEach((img) => img.classList.remove('is-leaving'));
+      // The outgoing image stays fully visible underneath while the next fades in
+      previous.classList.remove('is-current');
+      previous.classList.add('is-leaving');
+      next.classList.add('is-current');
+      if (caption) caption.textContent = next.getAttribute('data-caption') || '';
+      slideIndex = index;
+      window.clearTimeout(leavingTimer);
+      leavingTimer = window.setTimeout(() => previous.classList.remove('is-leaving'), 800);
+    };
+    const nextSlide = () => {
+      // Skip images that have not finished loading yet
+      for (let step = 1; step < slides.length; step += 1) {
+        const index = (slideIndex + step) % slides.length;
+        if (isLoaded(slides[index])) { showSlide(index); return; }
+      }
+    };
+    // The extra images are fetched after the page itself (or on first hover)
+    const loadSlides = () => {
+      slides.forEach((img) => {
+        const src = img.getAttribute('data-src');
+        if (src && !img.getAttribute('src')) img.setAttribute('src', src);
+      });
+    };
+    const startGallery = () => {
+      if (slides.length < 2 || galleryTimer) return;
+      loadSlides();
+      galleryTimer = window.setInterval(nextSlide, GALLERY_INTERVAL);
+    };
+    const stopGallery = () => {
+      window.clearInterval(galleryTimer);
+      galleryTimer = null;
+    };
+    // Preload once the page has loaded, on devices that have a mouse or trackpad
+    if (slides.length > 1 && window.matchMedia('(any-hover: hover)').matches) {
+      if (document.readyState === 'complete') loadSlides();
+      else window.addEventListener('load', loadSlides);
+    }
+
     const activate = (item) => {
+      const key = item.getAttribute('data-visual');
       items.forEach((el) => el.classList.toggle('is-active', el === item));
       homeMenu.classList.add('has-active');
-      showVisual(item.getAttribute('data-visual'));
+      showVisual(key);
+      if (key === galleryKey) startGallery();
+      else stopGallery();
     };
     const clear = () => {
       items.forEach((el) => el.classList.remove('is-active'));
       homeMenu.classList.remove('has-active');
       showVisual(defaultKey);
+      stopGallery();
     };
     items.forEach((item) => {
       item.addEventListener('mouseenter', () => activate(item));
