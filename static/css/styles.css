@@ -554,6 +554,12 @@ p, h1, h2, h3, h4, h5, h6, a, li { overflow-wrap: anywhere; word-break: break-wo
   height: 28%;
   background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.55) 100%);
 }
+/* Contact: a pale street map shown whole, on white, with no caption shading */
+.home-visual__item--map { background: #fff; }
+/* The slight brightness lift turns the image's off-white paper into pure white,
+   so the map has no visible edge against the page. */
+.home-visual__item--map img { object-fit: contain; filter: grayscale(1) brightness(1.02); }
+.home-visual__item--map::after { content: none; }
 .home-visual__caption {
   position: absolute;
   left: 20px;
